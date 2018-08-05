@@ -44,6 +44,7 @@ exports.cssLoaders = function (options) {
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
+    // publicPath: '../../' 解决css中图片引用的问题 当部署到服务器上时    Css中不要使用绝对路径 要使用相对路径引用图片../../static/img
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,

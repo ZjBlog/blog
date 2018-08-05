@@ -51,7 +51,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
-
+    // ./相对路径  解决部署到服务器时不是主域名的情况
     /**
      * Source Maps
      */
