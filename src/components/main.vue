@@ -1,0 +1,535 @@
+<template>
+  <div class="index-box">
+    <div class="banner">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide bg1" :style="{background: url1}">这世上最快的捷径就是脚踏实地</div>
+          <div class="swiper-slide bg2" :style="{background: url2}">笔耕不掇，天道酬勤</div>
+          <div class="swiper-slide bg3" :style="{background: url3}">十年磨一剑，一朝试锋芒</div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <div class="tt">
+      <div style="text-align: center;width: 30%;cursor:pointer;" @click="dd">
+        <div class="xwcms"></div>
+      </div>
+      <div style="width: 70%;">
+          <aplayer autoplay
+          :music="mp3[0]" :list="mp3"/>
+      </div>
+    </div>
+    <div class="kuai-box" v-for="(listItem, index1) in menuList" :class="{bgfff: false}" :key="index1">
+      <div class="kuai-main">
+        <h3>{{ listItem.text }}</h3>
+        <div class="list">
+          <div class="item"  v-for="(item, index2) in listItem.items" :class="{nom: (index2 + 1) % 3 === 0}" :key="index2" @click="detail(item.title)">
+            <div class="img-box">
+              <img :src="item.img" :class="{img: index1 === 0}"/>
+              <div class="imgma-box" if="item.imgma">
+                <img :src="item.imgma" class="imgma"/>
+              </div>
+            </div>
+            <div :class="{descinfo1: index1 === 0, descinfo: index1 !== 0}">
+              <div class="a-box">
+                <h6>{{ item.title }}</h6>
+                <span class="time" v-if="index1 == 0">{{ item.created_at }}</span>
+                <span class="time" v-if="index1 == 1">{{ item.created_at | time }}</span>
+                <p :class="{height: index1 === 0}" :title="item.description">{{ item.description }}</p>
+                <div class="button" v-if="index1 != 0" style="text-align:center;">
+                  <div class="btn">查看详情</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width: 100%;height: 20px;"></div>
+    </div>
+    <div class="tt1" style="text-align:center;">
+      <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage1"
+      :page-size="6"
+      layout="total, prev, pager, next"
+      :total="allTotal"
+      >
+    </el-pagination>
+    </div>
+    <div class="footer">
+      <div class="bo">
+       <a style="color:white"  href="javascript:void(0)" @click="sendmail" id='copy' data-clipboard-text="zhangjun521ly@gmail.com">
+       <i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>
+       <a href="https://github.com/zhangjunTracy"  target="_blank" style="color:white">
+       <i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+       <a href="https://stackoverflow.com//users/6622851/mr-zhang"  target="_blank" style="color:white">
+       <i class="fa fa-stack-overflow fa-2x" aria-hidden="true"></i></a>
+      </div>
+      <canvas id="c"></canvas>
+    </div>
+  </div>
+</template>
+
+<script>
+import configration from '../../static/configuration.json'
+import projects from '../../static/projects.json'
+import {aa} from '../assets/common.js'
+import Aplayer from 'vue-aplayer'
+import Clipboard from 'clipboard'
+Aplayer.disableVersionBadge = true
+export default {
+  name: 'hello',
+  data () {
+    return {
+      allTotal: 0,
+      currentPage1: 1,
+      mp3: configration.mp3,
+      url1: 'url(' + configration.banner_one + ') no-repeat center center',
+      url2: 'url(' + configration.banner_two + ') no-repeat center center',
+      url3: 'url(' + configration.banner_three + ') no-repeat center center',
+      menuList: [{
+        'text': '个人小项目',
+        'items': projects.items
+      }, {
+        'text': '个人随笔',
+        'items': []
+      }]
+    }
+  },
+  mounted () {
+    this.init1()
+    this.init()
+    aa()
+    let sw = new window.Swiper('.swiper-container', {
+      loop: true,
+      direction: 'horizontal',
+      speed: 500,
+      autoplay: 3000,
+      autoplayDisableOnInteraction: false,
+      pagination: '.swiper-pagination',
+      paginationClickable: true
+    })
+    console.info(sw)
+  },
+  methods: {
+    dd () {
+      window.open('https://github.com/zhangjunTracy/blog')
+    },
+    init () {
+      this.$http.get('/api/v5/gists?page=1&per_page=1000').then((res) => {
+        this.allTotal = res.data.length
+        console.info(res.data.length)
+      })
+    },
+    init1 () {
+      this.$http.get('/api/v5/gists?page=1&per_page=6').then((res) => {
+        console.info(res.data)
+        let result = res.data
+        let blogs = []
+        let setArr = this.randomNum()
+        for (let i = 0; i < result.length; i++) {
+          for (let key in result[i].files) {
+            let data = {}
+            data['title'] = key
+            data['description'] = result[i]['description']
+            data['id'] = result[i]['id']
+            data['created_at'] = result[i]['created_at']
+            data['img'] = 'static/images/' + setArr[i] + '.jpg'
+            blogs.push(data)
+            break
+          }
+        }
+        this.menuList[1].items = blogs
+      })
+    },
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+      this.$http.get(`/api/v5/gists?page=${val}&per_page=6`).then((res) => {
+        let result = res.data
+        let blogs = []
+        let setArr = this.randomNum()
+        for (let i = 0; i < result.length; i++) {
+          for (let key in result[i].files) {
+            let data = {}
+            data['title'] = key
+            data['description'] = result[i]['description']
+            data['id'] = result[i]['id']
+            data['created_at'] = result[i]['created_at']
+            data['img'] = 'static/images/' + setArr[i] + '.jpg'
+            blogs.push(data)
+            break
+          }
+        }
+        this.menuList[1].items = blogs
+      })
+    },
+    sendmail () {
+      let clipboard = new Clipboard('#copy')
+      clipboard.on('success', e => {
+        clipboard.destroy()
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '邮箱复制成功,欢迎发邮件给我!!!',
+          duration: 3000
+        })
+      })
+      clipboard.on('error', e => {
+        clipboard.destroy()
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '欢迎发邮件给我 :  zhangjun521ly@gmail.com ',
+          duration: 3000
+        })
+      })
+    },
+    detail (id) {
+      this.$message.success(id)
+    },
+    randomNum () {
+      let set = new Set()
+      for (let i = 0; i < 100; i++) {
+        let rand = Math.random()
+        set.add(1 + Math.floor(rand * 12))
+        if (set.size === 6) {
+          break
+        }
+      }
+      return Array.from(set)
+    }
+  },
+  components: {
+    Aplayer
+  }
+}
+</script>
+<style>
+.el-pager li {
+  background:#efefef !important;
+  font-size: 18px !important;
+}
+.el-pagination .btn-next .el-icon, .el-pagination .btn-prev .el-icon {
+  font-size: 17px !important;
+}
+.el-pagination button:disabled {
+ background:#efefef !important;
+}
+.el-pagination .btn-next, .el-pagination .btn-prev {
+  background-color: #efefef !important;
+}
+.el-pagination button, .el-pagination span:not([class*=suffix]) {
+  font-size: 17px !important;
+}
+</style>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less" scoped>
+@import '../../lib/swiper/swiper.css';
+@import '../../lib/reset.css';
+ .main {
+    height: 200px;
+    display: flex;
+    display: -webkit-flex;
+     flex-direction: row;
+     flex-wrap:nowrap;
+  }
+  .xwcms {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+    background: no-repeat url("../../static/images/123.png") left top;
+    -webkit-background-size: 220px 220px;
+    -moz-background-size: 220px 220px;
+    background-size: 220px 220px;
+    -webkit-border-radius: 110px;
+    border-radius: 110px;
+    -webkit-transition: -webkit-transform 2s ease-out;
+    -moz-transition: -moz-transform 2s ease-out;
+    -o-transition: -o-transform 2s ease-out;
+    -ms-transition: -ms-transform 2s ease-out;
+  }
+  .xwcms:hover {
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+    -o-transform: rotateZ(360deg);
+    -ms-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+  }
+  .tt {
+    margin-top: 20px;
+    width: 100%;
+    height: 230px;
+    display: flex;
+      display: -webkit-flex;
+      flex-direction: row;
+      flex-wrap:nowrap;
+  }
+  .tt1 {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  canvas{
+  position: absolute;
+  cursor: crosshair;
+  width:100%;
+  height:100px;
+  }
+.index-box {
+    background: #efefef;
+    min-width: 1200px;
+    .footer {
+      position: relative;
+      background-size: 150%;
+      width: 100%;
+      height: 100px;
+      .bo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.4);
+        line-height: 100px;
+        text-align: center;
+        font-size: 20px;
+        color: #fff;
+      }
+    }
+    .banner {
+      width: 100%;
+      min-width: 1200px;
+      height: 500px;
+      position: relative;
+      top: 0;
+      .swiper-slide {
+        font-size: 70px;
+        color: #fff;
+        line-height: 500px;
+        text-align: center;
+        text-shadow: 5px 5px 14px rgba(0, 0, 0, 0.6);
+      }
+      .bg1 {
+        height: 100%;
+        background-size: 100%;
+      }
+      .bg2 {
+        height: 100%;
+        background-size: 100%;
+      }
+      .bg3 {
+        height: 100%;
+        background-size: 100%;
+      }
+      .swiper-container {
+        height: 500px;
+      }
+    }
+  }
+.kuai-box {
+      width: 100%;
+      &.bgfff {
+        background: #fff;
+      }
+      .kuai-main {
+        width: 1200px;
+        height: 100%;
+        margin: 0 auto;
+        h3 {
+          text-align: center;
+          padding: 0 0 0 0;
+          font-weight: 800;
+          font-size: 33px;
+          margin: 15px;
+        }
+        .desc {
+          text-align: center;
+          font-size: 16px;
+        }
+        .list {
+          width: 100%;
+          height: 100%;
+          font-size: 0;
+          .item {
+            width: 30%;
+            height: 348px;
+            background: #fff;
+            margin-top: 20px;
+            margin-right: 5%;
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            &.nom {
+              margin-right: 0;
+            }
+
+            .shadow {/* 渐变阴影 */
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+              opacity: 0;
+              transition: opacity 0.7s;
+              z-index: 0;
+            }
+            &:hover .shadow {
+              opacity: 1;
+            }
+            &:hover .descinfo {
+              height: 180px;
+              top: 150px;
+            }
+            &:hover .img {
+              height: 0;
+            }
+            .img-box {
+              width: 100%;
+              height: 225px;
+              overflow: hidden;
+              img {
+                width: 100%;
+                height: 100%;
+                transition: height 0.5s;
+              }
+              .imgma-box {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                background: #efefef;
+                .imgma {
+                  height: 200px;
+                  width: 200px;
+                  display: block;
+                  position: absolute;
+                  margin: auto;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                }
+              }
+            }
+
+            .descinfo {
+              width: 100%;
+              height: 102px;
+              top: 225px;
+              background: #fff;
+              padding-top: 5%;
+              overflow: hidden;
+              position: absolute;
+              transition: all 0.5s;
+              .a-box {
+                width: 90%;
+                height: 88%;
+                font-size: 16px;
+                margin: 0 5% 4% 5%;
+                overflow: hidden;
+                h6 {
+                  margin: 0;
+                  padding: 0;
+                  line-height: 20px;
+                  font-size: 16px;
+                  font-weight: normal;
+                  &:hover {
+                    color: #f7a327;
+                  }
+                }
+                .time {
+                  font-size: 12px;
+                  line-height: 30px;
+                }
+                p {
+                  font-size: 13px;
+                  color: #888;
+                  line-height: 20px;
+                  margin: 0;
+                  &.height {
+                    height: 40px;
+                  }
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2;
+                  overflow: hidden;
+                }
+                .button {
+                  width: 100%;
+                  height: 50px;
+                  font-size: 0;
+                  margin-top: 20px;
+                  .btn {
+                    width: 40%;
+                    height: 26px;
+                    display: inline-block;
+                    margin: 0 5%;
+                    background: #409EFF;
+                    color: #fff;
+                    font-size: 14px;
+                    text-align: center;
+                    line-height: 26px;
+                    border-radius: 18px;
+                    &:hover {
+                      background: #409EFF;
+                    }
+                  }
+                }
+              }
+            }
+            .descinfo1 {
+              width: 100%;
+              height: 102px;
+              top: 225px;
+              background: #fff;
+              padding-top: 5%;
+              overflow: hidden;
+              position: absolute;
+              transition: all 0.5s;
+              .a-box {
+                width: 90%;
+                height: 88%;
+                font-size: 16px;
+                margin: 0 5% 4% 5%;
+                overflow: hidden;
+                h6 {
+                  margin: 0;
+                  padding: 0;
+                  line-height: 20px;
+                  font-size: 16px;
+                  font-weight: normal;
+                  &:hover {
+                    color: #f7a327;
+                  }
+                }
+                .time {
+                  font-size: 12px;
+                  line-height: 30px;
+                }
+                p {
+                  font-size: 13px;
+                  color: #888;
+                  line-height: 20px;
+                  margin: 0;
+                  height: 40px;
+
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2;
+                  overflow: hidden;
+                }
+              }
+            }
+          }
+          .kong {
+            width: 5%;
+            height: 100px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+</style>
