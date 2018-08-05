@@ -135,7 +135,8 @@ export default {
             data['description'] = result[i]['description']
             data['id'] = result[i]['id']
             data['created_at'] = result[i]['created_at']
-            data['img'] = 'static/images/' + setArr[i] + '.jpg'
+            data['img'] = 'http://7xnxtj.com1.z0.glb.clouddn.com/' + setArr[i] + '.jpg'
+            // data['img'] = 'static/images/' + setArr[i] + '.jpg'
             blogs.push(data)
             break
           }
