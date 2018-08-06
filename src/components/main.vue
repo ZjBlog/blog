@@ -57,26 +57,15 @@
       >
     </el-pagination>
     </div>
-    <div class="footer">
-      <div class="bo">
-       <a style="color:white"  href="javascript:void(0)" @click="sendmail" id='copy' data-clipboard-text="zhangjun521ly@gmail.com">
-       <i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>
-       <a href="https://github.com/zhangjunTracy"  target="_blank" style="color:white">
-       <i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-       <a href="https://stackoverflow.com//users/6622851/mr-zhang"  target="_blank" style="color:white">
-       <i class="fa fa-stack-overflow fa-2x" aria-hidden="true"></i></a>
-      </div>
-      <canvas id="c"></canvas>
-    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import configration from '../../static/configuration.json'
 import projects from '../../static/projects.json'
-import {aa} from '../assets/common.js'
 import Aplayer from 'vue-aplayer'
-import Clipboard from 'clipboard'
+import Footer from '@/components/footer'
 Aplayer.disableVersionBadge = true
 export default {
   name: 'hello',
@@ -100,7 +89,6 @@ export default {
   mounted () {
     this.init1()
     this.init()
-    aa()
     let sw = new window.Swiper('.swiper-container', {
       loop: true,
       direction: 'horizontal',
@@ -168,27 +156,6 @@ export default {
         this.menuList[1].items = blogs
       })
     },
-    sendmail () {
-      let clipboard = new Clipboard('#copy')
-      clipboard.on('success', e => {
-        clipboard.destroy()
-        this.$message({
-          showClose: true,
-          type: 'success',
-          message: '邮箱复制成功,欢迎发邮件给我!!!',
-          duration: 3000
-        })
-      })
-      clipboard.on('error', e => {
-        clipboard.destroy()
-        this.$message({
-          showClose: true,
-          type: 'success',
-          message: '欢迎发邮件给我 :  zhangjun521ly@gmail.com ',
-          duration: 3000
-        })
-      })
-    },
     detail (id) {
       this.$message.success(id)
     },
@@ -205,7 +172,8 @@ export default {
     }
   },
   components: {
-    Aplayer
+    Aplayer,
+    Footer
   }
 }
 </script>
@@ -225,6 +193,9 @@ export default {
 }
 .el-pagination button, .el-pagination span:not([class*=suffix]) {
   font-size: 17px !important;
+}
+.el-pagination {
+  margin-bottom: -32px;
 }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -273,34 +244,9 @@ export default {
     width: 100%;
     margin-bottom: 50px;
   }
-  canvas{
-  position: absolute;
-  cursor: crosshair;
-  width:100%;
-  height:100px;
-  }
 .index-box {
     background: #efefef;
     min-width: 1200px;
-    .footer {
-      position: relative;
-      background-size: 150%;
-      width: 100%;
-      height: 100px;
-      .bo {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10;
-        background: rgba(0, 0, 0, 0.4);
-        line-height: 100px;
-        text-align: center;
-        font-size: 20px;
-        color: #fff;
-      }
-    }
     .banner {
       width: 100%;
       min-width: 1200px;

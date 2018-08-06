@@ -1,16 +1,18 @@
 <template>
-  <div class="hello"  v-title data-title="标题内容">
+  <div class="hello"  v-title data-title="标题内容" style="min-height:500px;">
     <aplayer autoplay
       :music="{
         title: 'secret base~君がくれたもの~',
         artist: 'Silent Siren',
-        src: 'http://m10.music.126.net/20180606174657/5e260c2beb8ddfc3c1cc78398e5fbe85/ymusic/ee56/313f/cae3/f7ba25e37921ac14ea5d61377d88ef3a.mp3',
+        src: 'http://7xnxtj.com1.z0.glb.clouddn.com/cjdn.mp3',
         pic: ''
-      }"  />
+      }" />
+      <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Footer from '@/components/footer'
 import Aplayer from 'vue-aplayer'
 Aplayer.disableVersionBadge = true
 export default {
@@ -21,7 +23,8 @@ export default {
     }
   },
   components: {
-    Aplayer
+    Aplayer,
+    Footer
   }
 }
 </script>
