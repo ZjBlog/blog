@@ -17,7 +17,7 @@
       <div style="width: 70%;">
           <aplayer autoplay
           :music="mp3[0]" :list="mp3"/>
-      </div> 
+      </div>
     </div>
     <div class="kuai-box" v-for="(listItem, index1) in menuList" :class="{bgfff: false}" :key="index1">
       <div class="kuai-main">

@@ -8,7 +8,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.css'
 import instance from './http/index'
-import './assets/debugger.js'
+// import './assets/debugger.js'
 Vue.directive('title', {
   inserted: function (el, binding) {
     document.title = el.dataset.title

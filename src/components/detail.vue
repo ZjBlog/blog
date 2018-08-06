@@ -1,13 +1,33 @@
 <template>
-  <div class="hello"  v-title data-title="标题内容" style="min-height:500px;">
-    <aplayer autoplay
-      :music="{
-        title: 'secret base~君がくれたもの~',
-        artist: 'Silent Siren',
-        src: 'http://7xnxtj.com1.z0.glb.clouddn.com/cjdn.mp3',
-        pic: ''
-      }" />
-      <Footer></Footer>
+  <div class="hello"  v-title data-title="标题内容" style="background: #efefef;">
+    <div class="header">
+      <div style="text-align: center; width: 100px;height:100px; line-height:100px;">
+      <img src="../../static/images/code.png" width="64" height="64" style="margin: 0 autdisplay: inline-block; vertical-align: middle;"/>
+      </div>
+      <el-menu
+        :default-active="activeIndex2"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+        background-color="#1fa0ff"
+        text-color="#fff"
+        active-text-color="#f7ba2a">
+        <el-menu-item index="1">处理中心</el-menu-item>
+        <el-menu-item index="2">我的工作台</el-menu-item>
+        <el-menu-item index="3">消息中心</el-menu-item>
+        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+      </el-menu>
+    </div>
+    <div style="min-height:500px;">
+      <!-- <aplayer autoplay
+        :music="{
+          title: 'secret base~君がくれたもの~',
+          artist: 'Silent Siren',
+          src: 'http://7xnxtj.com1.z0.glb.clouddn.com/cjdn.mp3',
+          pic: ''
+        }" /> -->
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -19,33 +39,40 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      activeIndex2: '1'
     }
   },
   components: {
     Aplayer,
     Footer
+  },
+  methods: {
+    handleSelect (key, keyPath) {
+      console.log(key, keyPath)
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.el-menu--horizontal>.el-menu-item {
+  height: 100px;
+  line-height:100px;
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
+.el-menu-item {
+  font-size: 20px;
 }
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+a{text-decoration:none}
+ul{text-align:center;}
+.header {
+  display: flex;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #1fa0ff;
+  height: 100px;
 }
 </style>
