@@ -8,9 +8,6 @@ const routes = [{
   path: '/index.html',
   component: Main
 }, {
-  path: '/index.htm',
-  component: Main
-}, {
   path: '/index',
   component: Main
 }, {
@@ -20,12 +17,13 @@ const routes = [{
   path: '/detail',
   component: Detail
 }, {
+  name: 'h',
   path: '/h',
   component: HelloWorld
 }]
 export default new Router({
   mode: 'history',
   // 解决部署服务器不是根域名的情况
-  base: '/blog/',
+  // base: '/blog/',
   routes: routes
 })

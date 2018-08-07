@@ -57,7 +57,7 @@
       >
     </el-pagination>
     </div>
-    <Footer></Footer>
+    <footer-blog></footer-blog>
   </div>
 </template>
 
@@ -65,10 +65,10 @@
 import configration from '../../static/configuration.json'
 import projects from '../../static/projects.json'
 import Aplayer from 'vue-aplayer'
-import Footer from '@/components/footer'
+import FooterBlog from '@/components/footerblog'
 Aplayer.disableVersionBadge = true
 export default {
-  name: 'hello',
+  name: 'index',
   data () {
     return {
       allTotal: 0,
@@ -173,7 +173,7 @@ export default {
   },
   components: {
     Aplayer,
-    Footer
+    FooterBlog
   }
 }
 </script>

@@ -15,10 +15,9 @@
 import {aa} from '../assets/common.js'
 import Clipboard from 'clipboard'
 export default {
-  name: 'HelloWorld',
+  name: 'footerblog',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
   },
   mounted () {
