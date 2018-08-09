@@ -202,7 +202,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 @import '../../lib/swiper/swiper.css';
-// @import '../../lib/reset.css';
  .main {
     height: 200px;
     display: flex;
