@@ -20,6 +20,9 @@ const routes = [{
   name: 'h',
   path: '/h',
   component: HelloWorld
+}, {
+  path: '/detail.html',
+  component: Detail
 }]
 export default new Router({
   mode: 'history',

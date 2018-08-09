@@ -22,9 +22,10 @@
     "font-awesome": "^4.7.0",
     "hls.js": "^0.9.1",
     "jquery": "^3.1.1",
-    "normalize.css": "^5.0.0",
+    "normalize.css": "^8.0.0",
     "vue": "^2.5.2",
     "vue-aplayer": "^1.6.0",
+    "vue-qart": "^2.2.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

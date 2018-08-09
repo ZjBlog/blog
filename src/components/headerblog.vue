@@ -6,7 +6,7 @@
             <img src="../../static/images/logo.png" width="100px;" height="100%" style="margin-left:50%"/>
           </div>
         </el-col>
-        <el-col :span="16" :offset="2">
+        <el-col :span="16">
           <el-menu
             :default-active="index"
             class="el-menu-demo"
@@ -18,8 +18,7 @@
             <el-menu-item index="1">首&nbsp;&nbsp;&nbsp;&nbsp;页</el-menu-item>
             <el-menu-item index="2">文章详情</el-menu-item>
             <el-menu-item index="3">每天一记</el-menu-item>
-            <el-menu-item index="4">评论留言</el-menu-item>
-            <el-menu-item index="5"><a href="https://www.ele.me" target="_blank">友情链接</a></el-menu-item>
+            <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">友情链接</a></el-menu-item>
           </el-menu>
         </el-col>
       </el-row>

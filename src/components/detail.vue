@@ -1,5 +1,5 @@
 <template>
-  <div class="hello"  v-title data-title="标题内容" style="background: #efefef;">
+  <div class="hello"  v-title data-title="标题内容" style="background: #efefef;" >
     <header-blog index='1'></header-blog>
     <div style="min-height:500px;">
       <aplayer :autoplay="false"
@@ -10,29 +10,47 @@
           pic: ''
         }" />
     </div>
+    <vue-q-art :config="config" ref='vq'></vue-q-art>
+    <a class='el-button el-button--warning' @click="dd" style="font: 400 13.3333px Arial;" >下 &nbsp;&nbsp;&nbsp;&nbsp;载</a>
     <footer-blog></footer-blog>
   </div>
 </template>
-
 <script>
 import HeaderBlog from '@/components/headerblog'
 import FooterBlog from '@/components/footerblog'
 import Aplayer from 'vue-aplayer'
+import VueQArt from 'vue-qart'
 Aplayer.disableVersionBadge = true
 export default {
   name: 'detail',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      activeIndex2: '1'
+      activeIndex2: '1',
+      config: {
+        value: window.location.href,
+        imagePath: '../../static/images/logo.png',
+        filter: 'color'
+      }
     }
   },
   components: {
     Aplayer,
+    VueQArt,
     HeaderBlog,
     FooterBlog
   },
   methods: {
+    dd (e) {
+      console.info(e)
+      const myCanvas = this.$refs.vq.$refs.qart.children[0]
+      const type = 'image/png'
+      console.info(myCanvas)
+      e.target.href = myCanvas.toDataURL(type)
+      e.target.download = 'qr.png'
+    }
+  },
+  mounted () {
   }
 }
 </script>
@@ -52,4 +70,5 @@ ul{text-align:center;}
   background-color: #1fa0ff;
   height: 100px;
 }
+
 </style>

@@ -157,7 +157,8 @@ export default {
       })
     },
     detail (id) {
-      this.$message.success(id)
+      // this.$message.success(id)
+      window.open('https://github.com/zhangjunTracy/blog')
     },
     randomNum () {
       let set = new Set()
@@ -201,7 +202,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 @import '../../lib/swiper/swiper.css';
-@import '../../lib/reset.css';
+// @import '../../lib/reset.css';
  .main {
     height: 200px;
     display: flex;

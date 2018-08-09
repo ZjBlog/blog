@@ -7,6 +7,7 @@ import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.css'
+import 'normalize.css'
 import instance from './http/index'
 // import './assets/debugger.js'
 Vue.directive('title', {

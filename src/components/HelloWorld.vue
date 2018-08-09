@@ -1,19 +1,26 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <div style="height:100px;">
-      <img src="../../static/images/logo.png" height="100px" width="100px"/>
-    </div>
+    <vue-q-art :config="config"></vue-q-art>
   </div>
 </template>
 
 <script>
+import VueQArt from 'vue-qart'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App1',
+      config: {
+        value: 'https://www.baidu.com',
+        imagePath: '../../static/images/logo.png',
+        filter: 'color'
+      }
     }
+  },
+  components: {
+    VueQArt
   }
 }
 </script>
