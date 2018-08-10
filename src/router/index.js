@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Main from '@/components/main.vue'
 import Detail from '@/components/detail.vue'
 import Test from '@/components/test.vue'
+import Create from '@/components/create.vue'
 Vue.use(Router)
 const routes = [{
   path: '/index.html',
@@ -17,6 +18,15 @@ const routes = [{
 }, {
   path: '/detail',
   component: Detail
+}, {
+  path: '/detail.html',
+  component: Detail
+}, {
+  path: '/create',
+  component: Create
+}, {
+  path: '/create.html',
+  component: Create
 }, {
   name: 'h',
   path: '/h',
