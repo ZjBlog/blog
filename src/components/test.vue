@@ -13,6 +13,7 @@ import HeaderBlog from '@/components/headerblog'
 import FooterBlog from '@/components/footerblog'
 import {uuid} from '../assets/uuid.js'
 const hash = require('object-hash')
+const ls = require('local-storage')
 export default {
   name: 'detail',
   data () {
@@ -28,7 +29,14 @@ export default {
   methods: {
   },
   mounted () {
-    this.url = 'https://www.gravatar.com/avatar/' + hash.MD5(uuid()) + '?s=200&d=monsterid'
+    let md5 = ''
+    if (ls.get('md5')) {
+      md5 = ls.get('md5')
+    } else {
+      md5 = hash.MD5(uuid())
+      ls.set('md5', md5)
+    }
+    this.url = `https://www.gravatar.com/avatar/${md5}?s=200&d=monsterid`
   }
 }
 </script>
