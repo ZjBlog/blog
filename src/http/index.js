@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 import token from '../../static/configuration.json'
 const instance = axios.create({
   baseURL: 'https://gitee.com',
-  timeout: 3000,
+  timeout: 5000,
   headers: {'Authorization': 'token ' + token.access_token}
 })
 // Add a request interceptor
