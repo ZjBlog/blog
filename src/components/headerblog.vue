@@ -40,12 +40,15 @@ export default {
   },
   methods: {
     handleSelect (key, keyPath) {
-      if (key === '1') {
+      if (key === '2') {
+        this.$router.push('/detail')
+      } else if (key === '1') {
         this.$router.push('/')
+      } else if (key === '3') {
+        this.$router.push('/create.html')
       } else {
-        this.$router.push({name: 'h'})
+        this.$router.push('/')
       }
-      console.log(key, keyPath)
       // router.push({ path: 'register', query: { plan: 'private' }})
       // router.push({ name: 'user', params: { userId }}) // -> /user/123
       // router.push({ path: `/user/${userId}` }) // -> /user/123

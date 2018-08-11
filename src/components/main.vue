@@ -23,7 +23,7 @@
       <div class="kuai-main">
         <h3>{{ listItem.text }}</h3>
         <div class="list">
-          <div class="item"  v-for="(item, index2) in listItem.items" :class="{nom: (index2 + 1) % 3 === 0}" :key="index2" @click="detail(item.title)">
+          <div class="item"  v-for="(item, index2) in listItem.items" :class="{nom: (index2 + 1) % 3 === 0}" :key="index2" @click="detail(item.id,index1)">
             <div class="img-box">
               <img :src="item.img" :class="{img: index1 === 0}"/>
               <div class="imgma-box" if="item.imgma">
@@ -48,7 +48,6 @@
     </div>
     <div class="tt1" style="text-align:center;">
       <el-pagination
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage1"
       :page-size="6"
@@ -107,12 +106,10 @@ export default {
     init () {
       this.$http.get('/api/v5/gists?page=1&per_page=1000').then((res) => {
         this.allTotal = res.data.length
-        console.info(res.data.length)
       })
     },
     init1 () {
       this.$http.get('/api/v5/gists?page=1&per_page=6').then((res) => {
-        console.info(res.data)
         let result = res.data
         let blogs = []
         let setArr = this.randomNum()
@@ -131,9 +128,6 @@ export default {
         }
         this.menuList[1].items = blogs
       })
-    },
-    handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
     },
     handleCurrentChange (val) {
       console.log(`当前页: ${val}`)
@@ -156,9 +150,12 @@ export default {
         this.menuList[1].items = blogs
       })
     },
-    detail (id) {
-      // this.$message.success(id)
-      window.open('https://github.com/zhangjunTracy/blog')
+    detail (id, index) {
+      if (index === 0) {
+        window.open(id)
+      } else {
+        this.$router.push(`/detail/${id}.html`)
+      }
     },
     randomNum () {
       let set = new Set()

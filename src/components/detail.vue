@@ -1,12 +1,12 @@
 <template>
   <div class="hello"  v-title data-title="标题内容" style="background: #efefef;" >
-    <header-blog index='1'></header-blog>
+    <header-blog index='2'></header-blog>
     <div style="min-height:500px;">
       <aplayer :autoplay="false"
         :music="{
           title: 'secret base~君がくれたもの~',
           artist: 'Silent Siren',
-          src: 'http://7xnxtj.com1.z0.glb.clouddn.com/cjdn.mp3',
+          src: 'https://tsn.baidu.com/text2audio?tex=%E4%BD%A0%E5%A5%BD%E7%99%BE%E5%BA%A6&tok=24.38f8ac864b48a6638923c040c5c8a522.2592000.1536564936.282335-11590498&cuid=987456456&ctp=1&lan=zh',
           pic: ''
         }" />
     </div>
@@ -51,6 +51,7 @@ export default {
     }
   },
   mounted () {
+    console.info(this.$route.params.id)
   }
 }
 </script>

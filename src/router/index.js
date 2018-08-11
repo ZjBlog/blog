@@ -17,10 +17,10 @@ const routes = [{
   path: '/',
   component: Main
 }, {
-  path: '/detail',
+  path: '/detail/:id.html',
   component: Detail
 }, {
-  path: '/detail.html',
+  path: '/detail',
   component: Detail
 }, {
   path: '/create',
