@@ -5,6 +5,7 @@
         {{msg}}
         <img :src="url">
     </div>
+    <vue-q-art :config="config" ref='vq'></vue-q-art>
     <footer-blog></footer-blog>
   </div>
 </template>
@@ -13,6 +14,7 @@ import HeaderBlog from '@/components/headerblog'
 import FooterBlog from '@/components/footerblog'
 import {uuid} from '../assets/uuid.js'
 import axios from 'axios'
+import VueQArt from 'vue-qart'
 const hash = require('object-hash')
 const ls = require('local-storage')
 export default {
@@ -20,10 +22,16 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      url: ''
+      url: '',
+      config: {
+        value: window.location.href,
+        imagePath: '../../static/images/logo.png',
+        filter: 'color'
+      }
     }
   },
   components: {
+    VueQArt,
     HeaderBlog,
     FooterBlog
   },
@@ -46,6 +54,14 @@ export default {
       axios.post('https://tsn.baidu.com/text2audio', params).then(res => {
         console.info(res)
       })
+    },
+    dd (e) {
+      console.info(e)
+      const myCanvas = this.$refs.vq.$refs.qart.children[0]
+      const type = 'image/png'
+      console.info(myCanvas)
+      e.target.href = myCanvas.toDataURL(type)
+      e.target.download = 'qr.png'
     }
   },
   mounted () {

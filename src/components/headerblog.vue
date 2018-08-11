@@ -41,7 +41,11 @@ export default {
   methods: {
     handleSelect (key, keyPath) {
       if (key === '2') {
-        this.$router.push('/detail')
+        if (window.location.href.indexOf('detail') !== -1) {
+          console.info('保持当前页面状态')
+        } else {
+          this.$router.push('/detail')
+        }
       } else if (key === '1') {
         this.$router.push('/')
       } else if (key === '3') {
