@@ -26,7 +26,10 @@ instance.interceptors.response.use(function (response) {
     message: error.message,
     showClose: true,
     duration: 3000,
-    center: true
+    center: true,
+    onClose: function () {
+      window.location.href = '/'
+    }
   })
   return Promise.reject(error)
 })

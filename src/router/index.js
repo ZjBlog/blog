@@ -5,6 +5,7 @@ import Main from '@/components/main.vue'
 import Detail from '@/components/detail.vue'
 import Test from '@/components/test.vue'
 import Create from '@/components/create.vue'
+import Logout from '@/components/logout.vue'
 Vue.use(Router)
 const routes = [{
   path: '/index.html',
@@ -27,6 +28,18 @@ const routes = [{
 }, {
   path: '/create.html',
   component: Create
+}, {
+  path: '/login',
+  component: Create
+}, {
+  path: '/login.html',
+  component: Create
+}, {
+  path: '/logout',
+  component: Logout
+}, {
+  path: '/logout.html',
+  component: Logout
 }, {
   name: 'h',
   path: '/h',

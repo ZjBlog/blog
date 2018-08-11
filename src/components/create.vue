@@ -12,13 +12,30 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <el-button @click="resetForm('ruleForm')">清空</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div v-show="show && auth">
+        <el-row style="margin-top:20px;">
+          <el-col :span="8" :offset="8"><el-input placeholder="请输入标题" v-model="title" :maxlength="50" clearable> </el-input></el-col>
+        </el-row>
+        <el-row style="margin-top:20px;">
+         <el-col :span="8" :offset="8"><el-input type="textarea" :rows="2" placeholder="请输入简介" v-model="description"> </el-input></el-col>
+        </el-row>
+        <el-row style="margin-top:20px;">
+         <el-col :span="4" :offset="14">
+          <el-switch
+            v-model="pub"
+            active-text="公开"
+            inactive-text="私有">
+          </el-switch>
+         </el-col>
+        </el-row>
+        <el-row style="margin-top:20px;">
         <vue-editor v-model="content" placeholder="开始写文章吧"></vue-editor>
-        <el-button type="primary" @click="save">保存</el-button>
+        </el-row>
+        <el-button type="primary" @click="save" :disabled="dis">保存</el-button>
       </div>
     </div>
     <footer-blog></footer-blog>
@@ -35,11 +52,15 @@ export default {
   name: 'create',
   data () {
     return {
+      dis: false,
       loading: true,
       show: false,
       auth: false,
       msg: 'Welcome to Your Vue.js App',
       content: '',
+      title: '',
+      description: '',
+      pub: false,
       ruleForm: {
         name: '',
         pwd: ''
@@ -80,8 +101,57 @@ export default {
       this.$refs[formName].resetFields()
     },
     save () {
-      console.info(this.content)
-      this.content = ''
+      this.dis = true
+      if (!this.title) {
+        this.dis = false
+        this.$message({
+          message: '请输入标题',
+          showClose: true,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      if (!this.description) {
+        this.dis = false
+        this.$message({
+          message: '请输入简介',
+          showClose: true,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      if (!this.content) {
+        this.dis = false
+        this.$message({
+          message: '请输入内容',
+          showClose: true,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      // let files = {}
+      // files[this.title] = {content: this.content}
+      let files = {[this.title]: {content: this.content}}
+      this.$http.post('/api/v5/gists', {'description': this.description, 'files': files, 'public': this.pub}).then(res => {
+        this.open2()
+      })
+    },
+    open2 () {
+      this.$confirm('是否继续写博客?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.title = ''
+        this.content = ''
+        this.description = ''
+        this.dis = false
+      }).catch(() => {
+        window.location.href = '/'
+      })
     }
   },
   mounted () {
