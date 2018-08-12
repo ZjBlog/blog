@@ -21,7 +21,7 @@
           <el-col :span="8" :offset="8"><el-input placeholder="请输入标题" v-model="title" :maxlength="50" clearable> </el-input></el-col>
         </el-row>
         <el-row style="margin-top:20px;">
-         <el-col :span="8" :offset="8"><el-input type="textarea" :rows="2" placeholder="请输入简介" v-model="description"> </el-input></el-col>
+         <el-col :span="8" :offset="8"><el-input type="textarea" :rows="2" placeholder="请输入简介" v-model="description" :maxlength="240"> </el-input></el-col>
         </el-row>
         <el-row style="margin-top:20px;">
          <el-col :span="4" :offset="14">

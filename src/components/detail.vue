@@ -1,25 +1,16 @@
 <template>
-  <div class="hello"  v-title data-title="标题内容" style="background: #efefef;" >
+  <div class="hello"  v-title data-title="NBB(No Bug Blog)-文章详情" style="background: #efefef;" >
     <header-blog index='2'></header-blog>
-    <el-row :gutter="20">
-      <el-col :span="3" :offset="17">
-        <el-button type="info" round @click="edit">编辑</el-button>
-      </el-col>
-      <el-col :span="3">
-        <el-button type="danger" round @click="del">删除</el-button>
-      </el-col>
-    </el-row>
+    <div class="btn-flex"  v-if="auth">
+      <el-button type="info" round @click="edit">编辑</el-button>
+      <el-button type="danger" round @click="del">删除</el-button>
+    </div>
     <div style="min-height:200px;text-align:center">
       <h1>{{title}}</h1>
-      <aplayer :autoplay="false"
-        :music="{
-          title: '简介',
-          artist: '',
-          src: 'https://tsn.baidu.com/text2audio?tex=%E4%BD%A0%E5%A5%BD%E7%99%BE%E5%BA%A6&tok=24.38f8ac864b48a6638923c040c5c8a522.2592000.1536564936.282335-11590498&cuid=987456456&ctp=1&lan=zh',
-          pic: '../../static/images/logo.png'
-        }" />
-     <div v-html="html"></div>
-     <vue-q-art :config="config" ref='vq'></vue-q-art>
+      <aplayer  :autoplay="false"  v-if="mp5show"
+        :music="mp3"/>
+     <vue-editor v-model="html"  :editorToolbar="customToolbar"></vue-editor>
+     <!-- <vue-q-art :config="config" ref='vq'></vue-q-art> -->
     </div>
     <footer-blog></footer-blog>
   </div>
@@ -29,33 +20,36 @@ import HeaderBlog from '@/components/headerblog'
 import FooterBlog from '@/components/footerblog'
 import Aplayer from 'vue-aplayer'
 import VueQArt from 'vue-qart'
+import configration from '../../static/configuration.json'
+import { VueEditor } from 'vue2-editor'
+const ls = require('local-storage')
+const urlencode = require('urlencode')
 Aplayer.disableVersionBadge = true
 export default {
   name: 'detail',
   data () {
     return {
+      customToolbar: [],
       id: '',
       mp3: {
-        title: '',
-        artist: 'NBB',
-        src: '',
-        pic: '../../static/images/logo.png'
       },
       title: '测试',
       html: 'ddd',
       desc: '',
-      msg: 'Welcome to Your Vue.js App',
       activeIndex2: '1',
       config: {
         value: window.location.href,
         imagePath: '../../static/images/logo.png',
         filter: 'color'
-      }
+      },
+      auth: '',
+      mp5show: false
     }
   },
   components: {
     Aplayer,
     VueQArt,
+    VueEditor,
     HeaderBlog,
     FooterBlog
   },
@@ -63,6 +57,7 @@ export default {
     init (id) {
       this.$http.get(`/api/v5/gists/${id}`).then(res => {
         let result = res.data
+        let m = {}
         let vm = this
         for (let key in result.files) {
           vm.title = key
@@ -70,11 +65,38 @@ export default {
           vm.html = result.files[key].content
           break
         }
+        m.title = '语音预览'
+        m.pic = '../../static/images/logo.png'
+        m.artist = '--NBB'
+        m.src = 'http://tsn.baidu.com/text2audio?tex=' + urlencode(urlencode(this.desc)) + '&tok=' + configration.baidutoken + '&cuid=123456789' + '&ctp=1&lan=zh&spd=6'
+        this.mp3 = m
+        this.mp5show = true
       })
     },
     edit () {
     },
     del () {
+      this.$confirm('由于码云Api问题,暂不支持删除, 是否去官网删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        lockScroll: false
+      }).then(() => {
+        window.open('https://gitee.com')
+        // this.$http.delete(`/v5/gists/${this.id}`).then(res => {
+        //   this.$message({
+        //     type: 'success',
+        //     message: '删除成功!',
+        //     onClose: function () {
+        //       window.location.href = '/'
+        //     }
+        //   })
+        // }).catch(res => {
+        //   console.info(res)
+        // })
+      }).catch(() => {
+        console.info('取消删除')
+      })
     }
   },
   mounted () {
@@ -93,24 +115,17 @@ export default {
       this.id = this.$route.params.id
       this.init(this.id)
     }
+    this.auth = ls.get('isAuth')
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.el-menu--horizontal>.el-menu-item {
-  height: 100px;
-  line-height:100px;
+.btn-flex {
+  display: flex;
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  margin-top: 20px;
 }
-.el-menu-item {
-  font-size: 20px;
-}
-a{text-decoration:none}
-ul{text-align:center;}
-.header {
-  background-color: #1fa0ff;
-  height: 100px;
-}
-
 </style>

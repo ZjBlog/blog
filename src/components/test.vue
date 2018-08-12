@@ -6,6 +6,7 @@
         <img :src="url">
     </div>
     <vue-q-art :config="config" ref='vq'></vue-q-art>
+    <a class='el-button el-button--warning' @click="dd" style="font: 400 13.3333px Arial;" >下 &nbsp;&nbsp;&nbsp;&nbsp;载</a>
     <footer-blog></footer-blog>
   </div>
 </template>
@@ -13,7 +14,6 @@
 import HeaderBlog from '@/components/headerblog'
 import FooterBlog from '@/components/footerblog'
 import {uuid} from '../assets/uuid.js'
-import axios from 'axios'
 import VueQArt from 'vue-qart'
 const hash = require('object-hash')
 const ls = require('local-storage')
@@ -36,25 +36,6 @@ export default {
     FooterBlog
   },
   methods: {
-    init () {
-      axios.get('https://www.baidu.com').then(res => {
-        console.info(res)
-      })
-    },
-    init1 () {
-      let params = {}
-      params.tex = '你好百度 喝点酒吧'
-      params.tok = '24.38f8ac864b48a6638923c040c5c8a522.2592000.1536564936.282335-11590498'
-      params.cuid = '123465'
-      params.ctp = 1
-      params.lan = 'zh'
-      params.spd = 5
-      params.vol = 5
-      params.per = 0
-      axios.post('https://tsn.baidu.com/text2audio', params).then(res => {
-        console.info(res)
-      })
-    },
     dd (e) {
       console.info(e)
       const myCanvas = this.$refs.vq.$refs.qart.children[0]
@@ -65,7 +46,6 @@ export default {
     }
   },
   mounted () {
-    this.init()
     let md5 = ''
     if (ls.get('md5')) {
       md5 = ls.get('md5')

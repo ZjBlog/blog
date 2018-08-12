@@ -1,5 +1,5 @@
 <template>
-  <div class="index-box">
+  <div class="index-box" v-title data-title='NBB(No Bug Blog)-程序猿的进阶之路'>
     <div class="banner">
       <div class="swiper-container">
         <div class="swiper-wrapper">
