@@ -7,7 +7,7 @@
     </div>
     <div style="min-height:200px;text-align:center">
       <h1>{{title}}</h1>
-      <aplayer  :autoplay="false"  v-if="mp5show"
+      <aplayer  autoplay  v-if="mp5show"
         :music="mp3"/>
      <vue-editor v-model="html"  :editorToolbar="customToolbar"></vue-editor>
      <!-- <vue-q-art :config="config" ref='vq'></vue-q-art> -->
@@ -33,8 +33,8 @@ export default {
       id: '',
       mp3: {
       },
-      title: '测试',
-      html: 'ddd',
+      title: 'No Bug Blog',
+      html: 'No Bug Blog',
       desc: '',
       activeIndex2: '1',
       config: {
@@ -74,6 +74,7 @@ export default {
       })
     },
     edit () {
+      this.$router.push(`/create/${this.id}.html`)
     },
     del () {
       this.$confirm('由于码云Api问题,暂不支持删除, 是否去官网删除?', '提示', {

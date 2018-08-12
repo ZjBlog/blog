@@ -26,6 +26,9 @@ const routes = [{
   path: '/create',
   component: Create
 }, {
+  path: '/create/:id.html',
+  component: Create
+}, {
   path: '/create.html',
   component: Create
 }, {

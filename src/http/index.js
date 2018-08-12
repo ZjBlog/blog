@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import { Message } from 'element-ui'
+import { Message } from 'element-ui'
 import token from '../../static/configuration.json'
 const instance = axios.create({
   baseURL: 'https://gitee.com',
@@ -21,16 +21,16 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   console.info(error.code)
   // Do something with response error
-  // Message({
-  //   type: 'error',
-  //   message: error.message,
-  //   showClose: true,
-  //   duration: 3000,
-  //   center: true,
-  //   onClose: function () {
-  //     window.location.href = '/'
-  //   }
-  // })
+  Message({
+    type: 'error',
+    message: error.message,
+    showClose: true,
+    duration: 3000,
+    center: true,
+    onClose: function () {
+      window.location.href = '/'
+    }
+  })
   return Promise.reject(error)
 })
 export default instance

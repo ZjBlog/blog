@@ -52,6 +52,7 @@ export default {
   name: 'create',
   data () {
     return {
+      id: '',
       dis: false,
       loading: true,
       show: false,
@@ -135,9 +136,15 @@ export default {
       // let files = {}
       // files[this.title] = {content: this.content}
       let files = {[this.title]: {content: this.content}}
-      this.$http.post('/api/v5/gists', {'description': this.description, 'files': files, 'public': this.pub}).then(res => {
-        this.open2()
-      })
+      if (this.id) {
+        this.$http.patch(`/api/v5/gists/${this.id}`, {'description': this.description, 'files': files, 'public': this.pub}).then(res => {
+          this.open2()
+        })
+      } else {
+        this.$http.post('/api/v5/gists', {'description': this.description, 'files': files, 'public': this.pub}).then(res => {
+          this.open2()
+        })
+      }
     },
     open2 () {
       this.$confirm('是否继续写博客?', '提示', {
@@ -149,8 +156,24 @@ export default {
         this.content = ''
         this.description = ''
         this.dis = false
+        if (this.id) {
+          this.$router.push('/create.html')
+        }
       }).catch(() => {
         window.location.href = '/'
+      })
+    },
+    init (id) {
+      this.$http.get(`/api/v5/gists/${id}`).then(res => {
+        let result = res.data
+        let vm = this
+        this.pub = result.public
+        for (let key in result.files) {
+          vm.title = key
+          vm.description = result['description']
+          vm.content = result.files[key].content
+          break
+        }
       })
     }
   },
@@ -163,6 +186,10 @@ export default {
       this.loading = false
       this.show = true
       this.auth = false
+    }
+    if (this.$route.params.id) {
+      this.id = this.$route.params.id
+      this.init(this.id)
     }
   }
 }
