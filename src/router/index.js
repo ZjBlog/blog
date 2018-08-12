@@ -6,6 +6,7 @@ import Detail from '@/components/detail.vue'
 import Test from '@/components/test.vue'
 import Create from '@/components/create.vue'
 import Logout from '@/components/logout.vue'
+import Bmob from '@/components/bmob.vue'
 Vue.use(Router)
 const routes = [{
   path: '/index.html',
@@ -53,6 +54,9 @@ const routes = [{
 }, {
   path: '/t',
   component: Test
+}, {
+  path: '/b',
+  component: Bmob
 }]
 export default new Router({
   mode: 'history',

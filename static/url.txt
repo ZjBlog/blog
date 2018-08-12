@@ -1,3 +1,0 @@
-    "banner_one": "static/banner/banner1.png", http://7xnxtj.com1.z0.glb.clouddn.com/banner1.png
-    "banner_two": "static/banner/banner2.png", http://7xnxtj.com1.z0.glb.clouddn.com/banner1.png
-    "banner_three": "static/banner/banner3.png",http://7xnxtj.com1.z0.glb.clouddn.com/banner3.png
