@@ -19,7 +19,6 @@ instance.interceptors.response.use(function (response) {
   // Do something with response data
   return response
 }, function (error) {
-  console.info(error.code)
   // Do something with response error
   Message({
     type: 'error',

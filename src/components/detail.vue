@@ -7,7 +7,7 @@
     </div>
     <div style="min-height:655px;text-align:center;max-width:1200px;margin:0 auto;">
       <h1>{{title}}</h1>
-      <aplayer  :autoplay="false"  v-if="mp5show"
+      <aplayer  autoplay  v-if="mp5show"
         :music="mp3"/>
      <vue-editor v-model="html"  :editorToolbar="customToolbar"></vue-editor>
      <!-- <vue-q-art :config="config" ref='vq'></vue-q-art> -->
@@ -29,14 +29,13 @@
   </div>
 </template>
 <script>
-import HeaderBlog from '@/components/headerblog'
-import FooterBlog from '@/components/footerblog'
-import Aplayer from 'vue-aplayer'
-import VueQArt from 'vue-qart'
 import configration from '../../static/configuration.json'
 import { VueEditor } from 'vue2-editor'
 import '../assets/Bmob-1.6.2.min.js'
 import {uuid} from '../assets/uuid.js'
+const Aplayer = () => import('vue-aplayer')
+const FooterBlog = () => import('@/components/footerblog')
+const HeaderBlog = () => import('@/components/headerblog')
 const hash = require('object-hash')
 const ls = require('local-storage')
 const urlencode = require('urlencode')
@@ -54,18 +53,12 @@ export default {
       html: 'No Bug Blog',
       desc: '',
       activeIndex2: '1',
-      config: {
-        value: window.location.href,
-        imagePath: '../../static/images/logo.png',
-        filter: 'color'
-      },
       auth: '',
       mp5show: false
     }
   },
   components: {
     Aplayer,
-    VueQArt,
     VueEditor,
     HeaderBlog,
     FooterBlog

@@ -42,10 +42,10 @@
   </div>
 </template>
 <script>
-import HeaderBlog from '@/components/headerblog'
-import FooterBlog from '@/components/footerblog'
 import { VueEditor } from 'vue2-editor'
 import configration from '../../static/configuration.json'
+const FooterBlog = () => import('@/components/footerblog')
+const HeaderBlog = () => import('@/components/headerblog')
 const hash = require('object-hash')
 const ls = require('local-storage')
 export default {

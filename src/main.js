@@ -19,6 +19,7 @@ Vue.filter('time', function (value) {
   let date = new Date(value)
   return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
 })
+Vue.config.debug = true
 Vue.config.productionTip = false
 Vue.use(Element)
 Vue.prototype.$http = instance

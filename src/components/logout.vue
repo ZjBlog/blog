@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import HeaderBlog from '@/components/headerblog'
-import FooterBlog from '@/components/footerblog'
+const FooterBlog = () => import('@/components/footerblog')
+const HeaderBlog = () => import('@/components/headerblog')
 const ls = require('local-storage')
 export default {
   name: 'detail',

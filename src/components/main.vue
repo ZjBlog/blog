@@ -63,8 +63,8 @@
 <script>
 import configration from '../../static/configuration.json'
 import projects from '../../static/projects.json'
-import Aplayer from 'vue-aplayer'
-import FooterBlog from '@/components/footerblog'
+const Aplayer = () => import('vue-aplayer')
+const FooterBlog = () => import('@/components/footerblog')
 Aplayer.disableVersionBadge = true
 export default {
   name: 'index',
