@@ -1,11 +1,11 @@
 <template>
   <div class="hello"  v-title data-title="NBB(No Bug Blog)-文章详情" style="background: #efefef;" id="detail">
     <header-blog index='2'></header-blog>
-    <div class="btn-flex"  v-if="auth">
+    <div class="btn-flex"  v-if="auth" style="max-width:1200px;margin:0 auto;">
       <el-button type="info" round @click="edit">编辑</el-button>
       <el-button type="danger" round @click="del" style="margin-right:20px;">删除</el-button>
     </div>
-    <div style="min-height:200px;text-align:center">
+    <div style="min-height:655px;text-align:center;max-width:1200px;margin:0 auto;">
       <h1>{{title}}</h1>
       <aplayer  :autoplay="false"  v-if="mp5show"
         :music="mp3"/>

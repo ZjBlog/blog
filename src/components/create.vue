@@ -1,7 +1,7 @@
 <template>
   <div class="hello"  v-title data-title="NBB(No Bug Blog)-好记性不如烂笔头" style="background: #efefef;" >
     <header-blog index='3'></header-blog>
-    <div  v-loading="loading" style="min-height:500px;text-align:center" element-loading-text="玩命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div  v-loading="loading" style="min-height:655px;text-align:center;max-width:1200px;margin:0 auto;" element-loading-text="玩命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
       <div v-show="show && !auth" style="width:600px;" class="demo-block">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" >
           <el-form-item label="用户名" prop="name">
