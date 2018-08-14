@@ -8,6 +8,8 @@
           <div class="swiper-slide bg3" :style="{background: url3}">十年磨一剑，一朝试锋芒</div>
         </div>
         <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
     </div>
     <div class="tt">
@@ -63,6 +65,7 @@
 <script>
 import configration from '../../static/configuration.json'
 import projects from '../../static/projects.json'
+import Swiper from 'Swiper'
 const Aplayer = () => import('vue-aplayer')
 const FooterBlog = () => import('@/components/footerblog')
 Aplayer.disableVersionBadge = true
@@ -88,14 +91,17 @@ export default {
   mounted () {
     this.init1()
     this.init()
-    let sw = new window.Swiper('.swiper-container', {
+    let sw = new Swiper('.swiper-container', {
       loop: true,
       direction: 'horizontal',
       speed: 500,
       autoplay: 3000,
       autoplayDisableOnInteraction: false,
       pagination: '.swiper-pagination',
-      paginationClickable: true
+      paginationClickable: true,
+      paginationType: 'fraction',
+      prevButton: '.swiper-button-prev',
+      nextButton: '.swiper-button-next'
     })
     console.info(sw)
   },
