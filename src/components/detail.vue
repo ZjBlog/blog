@@ -11,7 +11,7 @@
         :music="mp3"/>
      <vue-editor v-model="html"  :editorToolbar="customToolbar"></vue-editor>
      <!-- <vue-q-art :config="config" ref='vq'></vue-q-art> -->
-    <el-input type="textarea" :rows="2" placeholder="评论一下吧" v-model="textarea"></el-input>
+    <el-input type="textarea" :rows="2" placeholder="评论一下吧" v-model="textarea" style="margin-top:10px;"></el-input>
     <!-- <el-row class="er">
       <el-col :span="3" :offset="16">
         <p style="line-height:10px;">还可以输入<span style="color:#409EFF;">{{count}}</span>字</p>
@@ -78,6 +78,12 @@ export default {
         this.$message.error('请输入评论')
       } else {
         let md5 = ''
+        let name = ''
+        if (!ls.get('name')) {
+          name = Math.random().toString(36).substr(2)
+        } else {
+          name = ls.get('name')
+        }
         if (ls.get('md5')) {
           md5 = ls.get('md5')
         } else {
@@ -89,6 +95,7 @@ export default {
         query.set('blogId', this.id)
         query.set('moment', this.textarea)
         query.set('avatar', url)
+        query.set('name', name)
         query.save().then(res => {
           this.textarea = ''
           this.$message.success('提交成功')

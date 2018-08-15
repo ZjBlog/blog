@@ -1,6 +1,9 @@
 <template>
-  <div  style="background: #efefef;">
-      <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+  <div  style="background: #efefef;max-width:1200px;">
+      <div v-for="(item,index) in items" :key="index">
+          <div class="xwcms" :style="item.avatar | avatar"></div>
+          <div v-text="item.moment"></div>
+      </div>
   </div>
 </template>
 <script>
@@ -12,7 +15,7 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      textarea: ''
+      items: [{'name': 'dddd', 'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=200&d=monsterid', 'moment': 'ddd'}]
     }
   },
   components: {
@@ -44,4 +47,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .xwcms {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    /* background: no-repeat url("../../static/images/123.png") left top; */
+    -webkit-background-size: 200px 200px;
+    -moz-background-size: 200px 200px;
+    background-size: 200px 200px;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    -webkit-transition: -webkit-transform 2s ease-out;
+    -moz-transition: -moz-transform 2s ease-out;
+    -o-transition: -o-transform 2s ease-out;
+    -ms-transition: -ms-transform 2s ease-out;
+  }
+  .xwcms:hover {
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+    -o-transform: rotateZ(360deg);
+    -ms-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+  }
 </style>
