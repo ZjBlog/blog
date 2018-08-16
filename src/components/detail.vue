@@ -54,7 +54,10 @@ export default {
       desc: '',
       activeIndex2: '1',
       auth: '',
-      mp5show: false
+      mp5show: false,
+      items: [{'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=100&d=monsterid'},
+        {'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=100&d=monsterid'},
+        {'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=100&d=monsterid'}]
     }
   },
   components: {
