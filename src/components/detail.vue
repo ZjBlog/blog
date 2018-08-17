@@ -5,25 +5,17 @@
       <el-button type="info" round @click="edit">编辑</el-button>
       <el-button type="danger" round @click="del" style="margin-right:20px;">删除</el-button>
     </div>
-    <div style="min-height:655px;text-align:center;max-width:1200px;margin:0 auto;">
+    <div style="min-height:655px;text-align:center;max-width:1200px;margin:0 auto;" id="pp">
       <h1>{{title}}</h1>
       <aplayer  autoplay  v-if="mp5show"
         :music="mp3"/>
-     <vue-editor v-model="html"  :editorToolbar="customToolbar"></vue-editor>
-     <!-- <vue-q-art :config="config" ref='vq'></vue-q-art> -->
-    <el-input type="textarea" :rows="2" placeholder="评论一下吧" v-model="textarea" style="margin-top:10px;"></el-input>
-    <!-- <el-row class="er">
-      <el-col :span="3" :offset="16">
-        <p style="line-height:10px;">还可以输入<span style="color:#409EFF;">{{count}}</span>字</p>
-      </el-col>
-      <el-col :span="2" :offset="1">
-        <el-button type="primary" round @click="comment">提&nbsp;&nbsp;交</el-button>
-      </el-col>
-    </el-row> -->
+     <vue-editor v-model="html"  :editorToolbar="customToolbar" disabled></vue-editor>
+     <bmob></bmob>
+    <!-- <el-input type="textarea" :rows="2" placeholder="评论一下吧" v-model="textarea" style="margin-top:10px;"></el-input>
     <div class="er1" >
       <p style="line-height:10px;margin-right:50px;">还可以输入<span style="color:#409EFF;">{{count}}</span>字</p>
       <el-button type="primary" style="margin-right:20px;" round @click="comment">提&nbsp;&nbsp;交</el-button>
-    </div>
+    </div> -->
     </div>
     <footer-blog></footer-blog>
   </div>
@@ -36,6 +28,7 @@ import {uuid} from '../assets/uuid.js'
 const Aplayer = () => import('vue-aplayer')
 const FooterBlog = () => import('@/components/footerblog')
 const HeaderBlog = () => import('@/components/headerblog')
+const Bmob = () => import('@/components/bmob.vue')
 const hash = require('object-hash')
 const ls = require('local-storage')
 const urlencode = require('urlencode')
@@ -61,6 +54,7 @@ export default {
     }
   },
   components: {
+    Bmob,
     Aplayer,
     VueEditor,
     HeaderBlog,
@@ -205,6 +199,9 @@ export default {
 <style>
 #detail .ql-toolbar {
   display: none;
+}
+#pp .aplayer {
+  margin: 5px 0px;
 }
 </style>
 <style scoped>

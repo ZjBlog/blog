@@ -1,5 +1,5 @@
 <template>
-  <div class="main"  :style="{background: backgroundColor}">
+  <div class="main"  :style="{background: backgroundColor,marginTop: mt + 'px'}">
       <textarea  class="text"  :style="{borderColor: mainColor}" v-model="comtent" placeholder="评论一下吧!" maxlength="200">
       </textarea>
       <div class="er1" :style="{borderColor: mainColor}">
@@ -41,6 +41,13 @@ export default {
     }
   },
   props: {
+    mt: {
+      type: Number,
+      default: 20,
+      validator: function (value) {
+        return value > 0
+      }
+    },
     mainColor: {
       type: String,
       default: '#409EFF'
@@ -51,28 +58,42 @@ export default {
     },
     worldCount: {
       type: Number,
-      default: 200
+      default: 200,
+      validator: function (value) {
+        return value > 0
+      }
     },
     allCount: {
       type: Number,
-      required: true,
-      default: 0
+      validator: function (value) {
+        return value > 0
+      }
     },
     size: {
       type: Number,
       default: 10,
-      required: true
+      validator: function (value) {
+        return value > 0
+      }
     },
     pageData: {
       type: Array,
       default () {
         return []
       }
+    },
+    nextPage: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     more () {
-      return Math.ceil(this.allCount / this.size) > 1 && this.allCount !== this.num * this.size
+      if (this.allCount > 0) {
+        return Math.ceil(this.allCount / this.size) > 1 && this.allCount !== this.pageData.length
+      } else {
+        return this.nextPage
+      }
     },
     count () {
       return this.worldCount - this.comtent.length
@@ -133,7 +154,7 @@ export default {
    .main {
      max-width:1200px;
      margin:auto;
-     text-align:center
+     text-align:center;
    }
    #mr {
      margin-right:20px;
@@ -163,7 +184,7 @@ export default {
     transform: rotateZ(360deg);
   }
   .er1 {
-  width: 99%;
+  width: 100%;
   display: flex;
   display: -webkit-flex; /* Safari */
   display: flex;
@@ -175,7 +196,7 @@ export default {
   margin: auto;
 }
   .er2{
-  width: 99%;
+  width: 100%;
   display: flex;
   display: -webkit-flex; /* Safari */
   display: flex;
@@ -193,7 +214,7 @@ textarea{outline:none}
   border-style:none;
   margin:0;
   padding:0;
-  width: 99%;
+  width: 100%;
   resize:none;
   height: 76px;
   border:solid 1px;
