@@ -10,12 +10,7 @@
       <aplayer  autoplay  v-if="mp5show"
         :music="mp3"/>
      <vue-editor v-model="html"  :editorToolbar="customToolbar" disabled></vue-editor>
-     <bmob></bmob>
-    <!-- <el-input type="textarea" :rows="2" placeholder="评论一下吧" v-model="textarea" style="margin-top:10px;"></el-input>
-    <div class="er1" >
-      <p style="line-height:10px;margin-right:50px;">还可以输入<span style="color:#409EFF;">{{count}}</span>字</p>
-      <el-button type="primary" style="margin-right:20px;" round @click="comment">提&nbsp;&nbsp;交</el-button>
-    </div> -->
+     <bmob :pageData="pageData" :allCount="allCount" @submit="submit" @moreData="moreData" :pageSize="pageSize" :nextPage="nextPage"></bmob>
     </div>
     <footer-blog></footer-blog>
   </div>
@@ -37,7 +32,6 @@ export default {
   name: 'detail',
   data () {
     return {
-      textarea: '',
       customToolbar: [],
       id: '',
       mp3: {
@@ -48,9 +42,12 @@ export default {
       activeIndex2: '1',
       auth: '',
       mp5show: false,
-      items: [{'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=100&d=monsterid'},
-        {'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=100&d=monsterid'},
-        {'avatar': 'https://www.gravatar.com/avatar/a63c9ca1fbe7a75217ad129bdb09304b?s=100&d=monsterid'}]
+      pageData: [],
+      allCount: 0,
+      pageSize: 2,
+      nextPage: false,
+      num: 1,
+      allCount1: 0
     }
   },
   components: {
@@ -61,46 +58,81 @@ export default {
     FooterBlog
   },
   computed: {
-    count () {
-      if (this.textarea) {
-        return 200 - this.textarea.length
-      } else {
-        return 200
-      }
-    }
   },
   methods: {
-    comment () {
-      if (!this.textarea) {
-        this.$message.error('请输入评论')
-      } else {
-        let md5 = ''
-        let name = ''
-        if (!ls.get('name')) {
-          name = this.getName()
-          ls.set('name', name)
-        } else {
-          name = ls.get('name')
-        }
-        if (ls.get('md5')) {
-          md5 = ls.get('md5')
-        } else {
-          md5 = hash.MD5(uuid())
-          ls.set('md5', md5)
-        }
-        let url = `https://www.gravatar.com/avatar/${md5}?s=200&d=monsterid`
-        const query = window.Bmob.Query('Blog')
-        query.set('blogId', this.id)
-        query.set('moment', this.textarea)
-        query.set('avatar', url)
-        query.set('name', name)
-        query.save().then(res => {
-          this.textarea = ''
-          this.$message.success('提交成功')
-        }).catch(err => {
-          console.log(err)
-        })
+    moreData (val) {
+      this.num = val
+      if (this.pageSize * this.num >= this.allCount1) {
+        this.nextPage = false
       }
+      console.info(val)
+      const query = window.Bmob.Query('Blog')
+      query.equalTo('blogId', '==', 'ghnvbkojl986fr50q1zci33')
+      query.order('-createdAt')
+      query.limit(this.pageSize)
+      query.skip(this.pageSize * this.pageSize)
+      query.find().then(res => {
+        this.pageData = [...this.pageData, ...res]
+        console.info(res)
+      }).catch(err => {
+        console.info(err)
+      })
+    },
+    submit (val) {
+      this.comment(val)
+    },
+    initComment (id) {
+      const query = window.Bmob.Query('Blog')
+      query.count().then(res => {
+        // this.allCount = res
+        this.allCount1 = res
+        if (res > this.pageSize * this.num) {
+          this.nextPage = true
+        }
+        console.log(`共有${res}条记录`)
+      })
+      query.equalTo('blogId', '==', 'ghnvbkojl986fr50q1zci33')
+      query.order('-createdAt')
+      query.limit(this.pageSize)
+      query.find().then(res => {
+        this.pageData = res
+        console.info(res)
+      }).catch(err => {
+        console.info(err)
+      })
+    },
+    comment (val) {
+      let md5 = ''
+      let name = ''
+      if (!ls.get('name')) {
+        name = this.getName()
+        ls.set('name', name)
+      } else {
+        name = ls.get('name')
+      }
+      if (ls.get('md5')) {
+        md5 = ls.get('md5')
+      } else {
+        md5 = hash.MD5(uuid())
+        ls.set('md5', md5)
+      }
+      let obj = {}
+      obj.name = name
+      obj.moment = val
+      let url = `https://www.gravatar.com/avatar/${md5}?s=100&d=monsterid`
+      obj.avatar = url
+      const query = window.Bmob.Query('Blog')
+      query.set('blogId', this.id)
+      query.set('moment', val)
+      query.set('avatar', url)
+      query.set('name', name)
+      query.save().then(res => {
+        obj.createdAt = res.createdAt
+        this.pageData.unshift(obj)
+        this.$message.success('提交成功')
+      }).catch(err => {
+        console.log(err)
+      })
     },
     init (id) {
       this.$http.get(`/api/v5/gists/${id}`).then(res => {
@@ -190,9 +222,10 @@ export default {
     } else {
       this.id = this.$route.params.id
       this.init(this.id)
+      this.auth = ls.get('isAuth')
+      window.Bmob.initialize(configration.bmobid, configration.bmobkey)
+      this.initComment(this.id)
     }
-    this.auth = ls.get('isAuth')
-    window.Bmob.initialize(configration.bmobid, configration.bmobkey)
   }
 }
 </script>
@@ -212,17 +245,5 @@ export default {
   justify-content:flex-end;
   align-items: center;
   margin-top: 20px;
-}
-.er1 {
-  display: flex;
-  display: -webkit-flex; /* Safari */
-  display: flex;
-  justify-content:flex-end;
-  align-items: center;
-  border: 1px solid #FFFFFF;
-  border-radius:10px;
-  margin-top: 10px;
-  height: 42px;
-  margin-bottom: 10px;
 }
 </style>

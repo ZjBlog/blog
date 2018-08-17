@@ -14,7 +14,7 @@
               {{item.name}}
             </p>
             <p>
-              {{item.createdAt}}
+              {{item.createdAt | time}}
             </p>
           </div>
           <div>
@@ -45,7 +45,7 @@ export default {
       type: Number,
       default: 20,
       validator: function (value) {
-        return value > 0
+        return value >= 0
       }
     },
     mainColor: {
@@ -65,11 +65,12 @@ export default {
     },
     allCount: {
       type: Number,
+      default: 0,
       validator: function (value) {
-        return value > 0
+        return value >= 0
       }
     },
-    size: {
+    pageSize: {
       type: Number,
       default: 10,
       validator: function (value) {
@@ -90,7 +91,7 @@ export default {
   computed: {
     more () {
       if (this.allCount > 0) {
-        return Math.ceil(this.allCount / this.size) > 1 && this.allCount !== this.pageData.length
+        return Math.ceil(this.allCount / this.pageSize) > 1 && this.allCount !== this.pageData.length
       } else {
         return this.nextPage
       }
@@ -107,7 +108,7 @@ export default {
   },
   watch: {
     pageData: function (curVal, oldVal) {
-      console.info(curVal.length + '=====' + oldVal.length)
+      this.comtent = ''
       this.dis = true
     }
   },
@@ -116,6 +117,7 @@ export default {
   methods: {
     moreData () {
       if (this.dis) {
+        this.num = this.num + 1
         this.dis = false
         this.$emit('moreData', this.num)
       }
@@ -129,22 +131,6 @@ export default {
     }
   },
   mounted () {
-    // window.Bmob.initialize('f8328d2a0f60bcdf593b4599d77acc12', '42f9db0aa62e6f2bd7850d324b0c473d')
-    // const query = window.Bmob.Query('Blog')
-    // query.equalTo('blogId', '==', 'ghnvbkojl986fr50q1zci33')
-    // query.find().then(res => {
-    //   console.info(res)
-    // }).catch(err => {
-    //   console.info(err)
-    // })
-    // query.set('blogId', '博客id')
-    // query.set('moment', '评论')
-    // query.set('avatar', 'img')
-    // query.save().then(res => {
-    //   console.log(res)
-    // }).catch(err => {
-    //   console.log(err)
-    // })
   }
 }
 </script>
