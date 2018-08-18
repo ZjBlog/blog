@@ -10,7 +10,7 @@
       <aplayer  autoplay  v-if="mp5show"
         :music="mp3"/>
      <vue-editor v-model="html"  :editorToolbar="customToolbar" disabled></vue-editor>
-     <bmob :pageData="pageData" :allCount="allCount" @submit="submit" @moreData="moreData" :pageSize="pageSize" :nextPage="nextPage"></bmob>
+     <bmob :pageData="pageData" :mainColor="color" :allCount="allCount" @submit="submit" @moreData="moreData" :pageSize="pageSize" :nextPage="nextPage"></bmob>
     </div>
     <footer-blog></footer-blog>
   </div>
@@ -32,6 +32,7 @@ export default {
   name: 'detail',
   data () {
     return {
+      color: '#409EFF',
       customToolbar: [],
       id: '',
       mp3: {

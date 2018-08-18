@@ -1,11 +1,11 @@
 <template>
-  <div class="main"  :style="{background: backgroundColor,marginTop: mt + 'px'}">
+  <div class="main"  :style="{background: backgroundColor,marginTop: margintop + 'px'}">
       <textarea  class="text"  :style="{borderColor: mainColor}" v-model="comtent" placeholder="评论一下吧!" maxlength="200">
       </textarea>
       <div class="er1" :style="{borderColor: mainColor}">
         <p style="line-height:10px;margin-right:50px;color:red;" v-show="show">请输入评论</p>
         <p style="line-height:10px;margin-right:50px;">还可以输入<span :style="{color:mainColor}">{{count}}</span>字</p>
-        <button id="mr" class="button button1"   @click="comment">发布评论</button>
+        <button class="button3" :style="{backgroundColor: mainColor}" @click.stop="comment"><span>发布评论</span></button>
       </div>
       <div v-for="(item,index) in pageData" :key="index" class="er2" :style="{marginTop:'15px',borderColor: mainColor}">
           <div class="xwcms" :style="item.avatar | avatar"></div>
@@ -25,7 +25,7 @@
       </div>
       <div style="height:20px;"></div>
       <div style="margin-bottom：15px;height:70px;" v-if="more">
-        <button class="button2" style="vertical-align:middle" @click="moreData"><span>加载更多 </span></button>
+        <button class="button2" :style="{backgroundColor: mainColor}" @click="moreData"><span>加载更多 </span></button>
       </div>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
     }
   },
   props: {
-    mt: {
+    margintop: {
       type: Number,
       default: 20,
       validator: function (value) {
@@ -142,9 +142,6 @@ export default {
      margin:auto;
      text-align:center;
    }
-   #mr {
-     margin-right:20px;
-   }
   .xwcms {
     flex-shrink: 0;
     margin-left: 10px;
@@ -210,33 +207,6 @@ textarea{outline:none}
   line-height: 24px;
   margin-bottom:15px;
 }
-.button {
-  background-color: #409EFF;
-  border: none;
-  color: white;
-  padding: 12px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius:6px;
-  outline:none;
-}
-.button1 {
-  background-color: white;
-  color: #409EFF;
-  border-right: 1px solid #409EFF;
-  border-left: 1px solid #409EFF;
-}
-
-.button1:hover {
-  background-color: #409EFF;
-  color: white;
-}
 .text3 {
 word-break:normal;
 white-space:pre-warp;
@@ -248,7 +218,6 @@ text-align:left;
 .button2 {
   display: inline-block;
   border-radius: 4px;
-  background-color: #409EFF;
   border: none;
   color: #FFFFFF;
   text-align: center;
@@ -265,7 +234,6 @@ text-align:left;
   display: inline-block;
   position: relative;
   transition: 0.5s;
-  margin-top: 10px;
 }
 
 .button2 span:after {
@@ -278,10 +246,49 @@ text-align:left;
 }
 
 .button2:hover span {
-  padding-right: 25px;
+  padding-right: 30px;
 }
 
 .button2:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.button3 {
+  display: inline-block;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 21px;
+  padding: 10px;
+  width: 130px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  outline:none;
+}
+
+.button3 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button3 span:after {
+  content: '√';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button3:hover span {
+  padding-right: 15px;
+}
+
+.button3:hover span:after {
   opacity: 1;
   right: 0;
 }
