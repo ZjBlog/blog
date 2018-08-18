@@ -265,10 +265,11 @@ text-align:left;
   display: inline-block;
   position: relative;
   transition: 0.5s;
+  margin-top: 10px;
 }
 
 .button2 span:after {
-  content: '»';
+  content: '>>';
   position: absolute;
   opacity: 0;
   top: 0;
