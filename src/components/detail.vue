@@ -33,6 +33,7 @@ import configration from '../../static/configuration.json'
 import { VueEditor } from 'vue2-editor'
 import '../assets/Bmob-1.6.2.min.js'
 import {uuid} from '../assets/uuid.js'
+const CommentList = () => import('vue-comment-list')
 const Aplayer = () => import('vue-aplayer')
 const FooterBlog = () => import('@/components/footerblog')
 const HeaderBlog = () => import('@/components/headerblog')
@@ -58,6 +59,7 @@ export default {
     }
   },
   components: {
+    CommentList,
     Aplayer,
     VueEditor,
     HeaderBlog,
