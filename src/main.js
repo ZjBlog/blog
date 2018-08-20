@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import instance from './http/index'
 import VueCommentList from 'vue-comment-list'
+import './assets/debugger.js'
 Vue.directive('title', {
   inserted: function (el, binding) {
     document.title = el.dataset.title
