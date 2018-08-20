@@ -45,7 +45,7 @@ export default {
       mp5show: false,
       pageData: [],
       allCount: 0,
-      pageSize: 2,
+      pageSize: 5,
       nextPage: false,
       num: 1,
       allCount1: 0
@@ -68,10 +68,10 @@ export default {
       }
       console.info(val)
       const query = window.Bmob.Query('Blog')
-      query.equalTo('blogId', '==', 'ghnvbkojl986fr50q1zci33')
+      query.equalTo('blogId', '==', this.id)
       query.order('-createdAt')
       query.limit(this.pageSize)
-      query.skip(this.pageSize * this.pageSize)
+      query.skip(this.pageSize * (val - 1))
       query.find().then(res => {
         this.pageData = [...this.pageData, ...res]
         console.info(res)
@@ -84,18 +84,19 @@ export default {
     },
     initComment (id) {
       const query = window.Bmob.Query('Blog')
+      query.equalTo('blogId', '==', id)
       query.count().then(res => {
         // this.allCount = res
         this.allCount1 = res
         if (res > this.pageSize * this.num) {
           this.nextPage = true
         }
-        console.log(`共有${res}条记录`)
       })
-      query.equalTo('blogId', '==', 'ghnvbkojl986fr50q1zci33')
-      query.order('-createdAt')
-      query.limit(this.pageSize)
-      query.find().then(res => {
+      const query1 = window.Bmob.Query('Blog')
+      query1.equalTo('blogId', '==', id)
+      query1.order('-createdAt')
+      query1.limit(this.pageSize)
+      query1.find().then(res => {
         this.pageData = res
         console.info(res)
       }).catch(err => {

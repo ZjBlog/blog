@@ -24,7 +24,7 @@ import {
   Loading,
   MessageBox
 } from 'element-ui'
-// import './assets/debugger.js'
+import './assets/debugger.js'
 Vue.directive('title', {
   inserted: function (el, binding) {
     document.title = el.dataset.title
