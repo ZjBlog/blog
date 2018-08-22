@@ -10,7 +10,7 @@
       <aplayer  autoplay  v-if="mp5show"
         :music="mp3"/>
      <vue-editor v-model="html"  :editorToolbar="customToolbar" disabled></vue-editor>
-     <vue-comment-list :pageData="pageData"  :allCount="allCount" @submit="submit" @moreData="moreData" :pageSize="pageSize" :nextPage="nextPage"></vue-comment-list>
+     <comments :pageData="pageData"  :allCount="allCount" @submit="submit" @moreData="moreData" :pageSize="pageSize" :nextPage="nextPage"></comments>
     </div>
     <footer-blog></footer-blog>
   </div>
@@ -20,6 +20,7 @@ import configration from '../../static/configuration.json'
 import { VueEditor } from 'vue2-editor'
 import '../assets/Bmob-1.6.2.min.js'
 import {uuid} from '../assets/uuid.js'
+const Comments = () => import('vue-comments')
 const Aplayer = () => import('vue-aplayer')
 const FooterBlog = () => import('@/components/footerblog')
 const HeaderBlog = () => import('@/components/headerblog')
@@ -50,6 +51,7 @@ export default {
     }
   },
   components: {
+    Comments,
     Aplayer,
     VueEditor,
     HeaderBlog,
