@@ -1,13 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import A from '@/components/a.vue'
-// import HelloWorld from '@/components/HelloWorld'
-// import Main from '@/components/main.vue'
-// import Detail from '@/components/detail.vue'
-// import Test from '@/components/test.vue'
-// import Create from '@/components/create.vue'
-// import Logout from '@/components/logout.vue'
-// import Bmob from '@/components/bmob.vue'
 const Main = () => import('@/components/main.vue')
 const Detail = () => import('@/components/detail.vue')
 const Test = () => import('@/components/test.vue')
@@ -65,9 +57,6 @@ const routes = [{
 }, {
   path: '/b',
   component: Bmob
-}, {
-  path: '/a',
-  component: A
 }]
 export default new Router({
   mode: 'history',
