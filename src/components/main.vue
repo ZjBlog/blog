@@ -65,7 +65,6 @@
 <script>
 import configration from '../../static/configuration.json'
 import projects from '../../static/projects.json'
-import Swiper from 'Swiper'
 const Aplayer = () => import('vue-aplayer')
 const FooterBlog = () => import('@/components/footerblog')
 Aplayer.disableVersionBadge = true
@@ -91,7 +90,7 @@ export default {
   mounted () {
     this.init1()
     this.init()
-    let sw = new Swiper('.swiper-container', {
+    let sw = new window.Swiper('.swiper-container', {
       loop: true,
       direction: 'horizontal',
       speed: 500,
@@ -204,7 +203,6 @@ export default {
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-@import '../../lib/swiper/swiper.css';
  .main {
     height: 200px;
     display: flex;
