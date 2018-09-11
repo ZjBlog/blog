@@ -37,6 +37,10 @@ Vue.filter('time', function (value) {
 Vue.filter('avatar', function (value) {
   return {'background': 'url(' + value + ') no-repeat left top'}
 })
+Vue.filter('desc', function (val) {
+  let res = val.length > 48 ? val.substring(0, 47) + '...' : val
+  return res
+})
 Vue.config.debug = true
 Vue.config.productionTip = false
 Vue.use(Pagination)

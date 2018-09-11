@@ -35,7 +35,7 @@
                 <h6>{{ item.title }}</h6>
                 <span class="time" v-if="index1 == 0">{{ item.created_at }}</span>
                 <span class="time" v-if="index1 == 1">{{ item.created_at | time }}</span>
-                <p :class="{height: index1 === 0}" :title="item.description">{{ item.description }}</p>
+                <p :class="{height: index1 === 0}" :title="item.description">{{ item.description | desc }}</p>
                 <div class="button" v-if="index1 != 0" style="text-align:center;">
                   <div class="btn">查看详情</div>
                 </div>
