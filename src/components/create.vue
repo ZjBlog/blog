@@ -35,7 +35,7 @@
         <el-row style="margin-top:20px;">
         <vue-editor v-model="content" placeholder="开始写文章吧"></vue-editor>
         </el-row>
-        <el-button type="primary" @click="save" :disabled="dis">保存</el-button>
+        <el-button type="primary" style="margin-top:10px;" @click="save" :disabled="dis">保存</el-button>
       </div>
     </div>
     <footer-blog></footer-blog>

@@ -1,5 +1,5 @@
 <template>
-  <div class="index-box" v-title data-title='NBB(No Bug Blog)-程序猿的进阶之路'>
+  <div class="index-box" v-title data-title='猿码集-程序猿的进击之路'>
     <div class="banner">
       <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -37,7 +37,7 @@
                 <h6>{{ item.title }}</h6>
                 <span class="time" v-if="index1 == 0">{{ item.created_at }}</span>
                 <span class="time" v-if="index1 == 1">{{ item.created_at | time }}</span>
-                <p :class="{height: index1 === 0}" :title="item.description">{{ item.description }}</p>
+                <p :class="{height: index1 === 0}" :title="item.description">{{ item.description | desc}}</p>
                 <div class="button" v-if="index1 != 0" style="text-align:center;">
                   <div class="btn">查看详情</div>
                 </div>
@@ -92,15 +92,16 @@ export default {
     this.init()
     let sw = new window.Swiper('.swiper-container', {
       loop: true,
-      direction: 'horizontal',
       speed: 500,
-      autoplay: 3000,
-      autoplayDisableOnInteraction: false,
-      pagination: '.swiper-pagination',
-      paginationClickable: true,
-      paginationType: 'fraction',
-      prevButton: '.swiper-button-prev',
-      nextButton: '.swiper-button-next'
+      autoplay: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }
     })
     console.info(sw)
   },

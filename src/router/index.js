@@ -6,6 +6,7 @@ const Test = () => import('@/components/test.vue')
 const Create = () => import('@/components/create.vue')
 const Logout = () => import('@/components/logout.vue')
 const HelloWorld = () => import('@/components/HelloWorld')
+const Login = () => import('@/components/login')
 Vue.use(Router)
 const routes = [{
   path: '/index.html',
@@ -32,12 +33,6 @@ const routes = [{
   path: '/create.html',
   component: Create
 }, {
-  path: '/login',
-  component: Create
-}, {
-  path: '/login.html',
-  component: Create
-}, {
   path: '/logout',
   component: Logout
 }, {
@@ -53,6 +48,9 @@ const routes = [{
 }, {
   path: '/t',
   component: Test
+}, {
+  path: '/login.html',
+  component: Login
 }]
 export default new Router({
   mode: 'history',

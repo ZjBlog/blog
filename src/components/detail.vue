@@ -1,7 +1,7 @@
 <template>
-  <div class="hello"  v-title data-title="NBB(No Bug Blog)-文章详情" style="background: #efefef;" id="detail">
-    <header-blog index='2'></header-blog>
-    <div class="btn-flex"  v-if="auth" style="max-width:1200px;margin:0 auto;">
+  <div class="hello"  v-title data-title="文章详情-程序猿的进击之路" style="background: #efefef;" id="detail">
+    <header-b :index='2'></header-b>
+    <div class="btn-flex"  v-if="auth" style="max-width:1200px;margin:0 auto;margin-top:20px;">
       <el-button type="info" round @click="edit">编辑</el-button>
       <el-button type="danger" round @click="del" style="margin-right:20px;">删除</el-button>
     </div>
@@ -24,6 +24,7 @@ const Comments = () => import('vue-comments')
 const Aplayer = () => import('vue-aplayer')
 const FooterBlog = () => import('@/components/footerblog')
 const HeaderBlog = () => import('@/components/headerblog')
+const HeaderB = () => import('@/components/Head')
 const hash = require('object-hash')
 const ls = require('local-storage')
 const urlencode = require('urlencode')
@@ -54,6 +55,7 @@ export default {
     Comments,
     Aplayer,
     VueEditor,
+    HeaderB,
     HeaderBlog,
     FooterBlog
   },
@@ -147,7 +149,8 @@ export default {
         m.title = '语音预览'
         m.pic = '../../static/images/logo.png'
         m.artist = '--NBB'
-        m.src = 'http://tsn.baidu.com/text2audio?tex=' + urlencode(urlencode(this.desc)) + '&tok=' + configration.baidutoken + '&cuid=123456789' + '&ctp=1&lan=zh&spd=6'
+        m.src = 'https://tsn.baidu.com/text2audio?tex=' + urlencode(urlencode(this.desc)) + '&tok=' + configration.baidutoken + '&cuid=123456789' + '&ctp=1&lan=zh&spd=6'
+        console.info(m.src)
         this.mp3 = m
         this.mp5show = true
       })

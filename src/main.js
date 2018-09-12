@@ -6,7 +6,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import instance from './http/index'
-import './assets/debugger.js'
+// import './assets/debugger.js'
 Vue.directive('title', {
   inserted: function (el, binding) {
     document.title = el.dataset.title
@@ -15,6 +15,10 @@ Vue.directive('title', {
 Vue.filter('time', function (value) {
   let date = new Date(value)
   return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
+})
+Vue.filter('desc', function (val) {
+  let res = val.length > 48 ? val.substring(0, 47) + '...' : val
+  return res
 })
 Vue.config.debug = true
 Vue.config.productionTip = false
