@@ -1,22 +1,7 @@
 <template>
-  <div class="hello"  v-title data-title="NBB(No Bug Blog)-好记性不如烂笔头" style="background: #efefef;" >
-    <header-blog index='3'></header-blog>
-    <div  v-loading="loading" style="min-height:655px;text-align:center;max-width:1200px;margin:0 auto;" element-loading-text="玩命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
-      <div v-show="show && !auth" style="width:600px;" class="demo-block">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" >
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="ruleForm.name" placeholder="请输入用户名" suffix-icon="el-icon-edit" :maxlength="10"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="pwd" >
-            <el-input v-model="ruleForm.pwd" placeholder="请输入密码" suffix-icon="el-icon-edit" :maxlength="6" type="password"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-            <el-button @click="resetForm('ruleForm')">清空</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div v-show="show && auth">
+  <div class="hello"  v-title data-title="猿码集-好记性不如烂笔头" style="background: #efefef;" >
+    <header-blog :index='3'></header-blog>
+    <div style="max-width:1200px;width:100%;margin:0 auto;text-align:center">
         <el-row style="margin-top:20px;">
           <el-col :span="8" :offset="8"><el-input placeholder="请输入标题" v-model="title" :maxlength="50" clearable> </el-input></el-col>
         </el-row>
@@ -36,7 +21,6 @@
         <vue-editor v-model="content" placeholder="开始写文章吧"></vue-editor>
         </el-row>
         <el-button type="primary" style="margin-top:10px;" @click="save" :disabled="dis">保存</el-button>
-      </div>
     </div>
     <footer-blog></footer-blog>
   </div>
@@ -45,7 +29,7 @@
 import { VueEditor } from 'vue2-editor'
 import configration from '../../static/configuration.json'
 const FooterBlog = () => import('@/components/footerblog')
-const HeaderBlog = () => import('@/components/headerblog')
+const HeaderBlog = () => import('@/components/Head')
 const hash = require('object-hash')
 const ls = require('local-storage')
 export default {
@@ -179,13 +163,9 @@ export default {
   },
   mounted () {
     if (ls.get('isAuth')) {
-      this.loading = false
-      this.show = true
-      this.auth = true
+      console.info(ls.get('isAuth'))
     } else {
-      this.loading = false
-      this.show = true
-      this.auth = false
+      this.$router.push('/')
     }
     if (this.$route.params.id) {
       this.id = this.$route.params.id
